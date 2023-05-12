@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SWI-Prolog path finder</title>
+    <link rel="stylesheet" href="style.css">
+    <script charset="utf-8" src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;1,400;1,600;1,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper" id="wrapper">
+        <div class="screen" id="screen">
+            <div class="input limits">
+                <div class="input-title">Размер сетки</div>
+                <div class="input-row">
+                    Количество строк: <span id="rowsCount">3</span>
+                    <div class="input-range">
+                        2 <input type="range" id="rowsRange" min="2" max="10" value="3"> 10
+                    </div>
+                </div>
+                <div class="input-row">
+                    Количество столбцов: <span id="columnsCount">3</span>
+                    <div class="input-range">
+                        2 <input type="range" id="columnsRange" min="2" max="10" value="3"> 10
+                    </div>
+                </div>
+                <button class="input-button" id="limitsButton">Следующий шаг</button>
+            </div>
+        </div>
+        <div class="input-wrapper" id="inputWrapper">
+            <div class="input start" id="start" style="display: none;">
+                <div class="input-title">Начало пути</div>
+                <div class="input-row">
+                    Отметьте на сетке начало пути блоком:
+                </div>
+                <div class="cell cell-start"></div>
+                <button class="input-button" id="startButton">Следующий шаг</button>
+            </div>
+            <div class="input finish" id="finish" style="display: none;">
+                <div class="input-title">Конец пути</div>
+                <div class="input-row">
+                    Отметьте на сетке конец пути блоком:
+                </div>
+                <div class="cell cell-finish"></div>
+                <button class="input-button" id="finishButton">Следующий шаг</button>
+            </div>
+            <div class="input walls" id="walls" style="display: none;">
+                <div class="input-title">Стены</div>
+                <div class="input-row">
+                    Отметьте на сетке стены блоками:
+                </div>
+                <div class="cell cell-wall"></div>
+                <button class="input-button" id="wallsButton">Построить пути</button>
+            </div>
+        </div>
+        <div class="paths" id="paths" style="display: none;">
+            <div class="paths-arrow"><</div>
+            <div>
+                <span class="colored">1</span> / 10
+            </div>
+            <div class="paths-arrow">></div>
+        </div>
+        <div class="grid" id="grid">
+            <!-- <div class="cell cell-start"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell cell-path"></div>
+            <div class="cell cell-wall"></div>
+            <div class="cell cell-wall"></div>
+            <div class="cell cell-path"></div>
+            <div class="cell cell-path"></div>
+            <div class="cell cell-finish"></div> -->
+        </div>
+        <div class="input-align" id="inputAlign"></div>
+        <button class="retry-button" id="retryButton" style="display: none;">повторить</button>
+    </div>
+</body>
+</html>
