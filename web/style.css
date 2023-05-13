@@ -96,6 +96,10 @@ button {
     background-color: #BA68C8;
 }
 
+.cell-path::before {
+    color: #9C27B0;
+}
+
 .paths {
     cursor: default;
     color: #37416a;
@@ -114,6 +118,8 @@ button {
     height: 30px;
     width: 30px;
     font-size: 16pt;
+    background-color: #181e38;
+    color: #37416a;
     border: 1px solid #181e38;
     border-radius: 7px;
 
