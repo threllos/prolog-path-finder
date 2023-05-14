@@ -111,7 +111,7 @@ button {
     gap: 10px;
 }
 
-.paths-arrow {
+.paths-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,14 +122,17 @@ button {
     color: #37416a;
     border: 1px solid #181e38;
     border-radius: 7px;
-
     transition: all 0.3s ease;
 }
 
-.paths-arrow:hover {
+.paths-button:hover {
     border: 1px solid #37416a;
     cursor: pointer;
     color: #3663fe;
+}
+
+.paths-button:disabled {
+    border: 1px solid #181e38;
 }
 
 .colored {
@@ -150,6 +153,10 @@ button {
 .retry-button:hover {
     color: #3663fe;
     border: 1px solid #37416a;
+}
+
+.retry-button:disabled {
+    border: 1px solid #181e38;
 }
 
 .input-align {
@@ -198,6 +205,10 @@ button {
     border: 1px solid #fff;
 }
 
+.input-button:disabled {
+    border: 1px solid #37416a;
+}
+
 .input-range {
     display: flex;
     gap: 5px;
@@ -216,24 +227,20 @@ input[type=range]:focus {
 
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 5px;
+    height: 4px;
+    border-radius: 3px;
     cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: #3071a9;
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
+    background: #181e38;
 }
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #3663fe;
     cursor: pointer;
-    margin-top: -14px;
+    border: none;
 }
 
 input[type=range]::-moz-range-track {
@@ -252,3 +259,36 @@ input[type=range]::-moz-range-thumb {
     cursor: pointer;
     border: none;
 }
+
+.loader-align {
+    height: 20px;
+}
+
+.loader {
+    width: 156px;
+    height: 4px;
+    display: inline-block;
+    background: #37416a;
+    overflow: hidden;
+    position: relative;
+  }
+  .loader::after {
+    content: '';
+    width: 50%;
+    height: 4px;
+    background: #3663fe;
+    position: absolute;
+    box-sizing: border-box;
+    animation: animloader 2s linear infinite;
+  }
+  
+  @keyframes animloader {
+    0% {
+      left: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      left: 100%;
+      transform: translateX(0%);
+    }
+  }

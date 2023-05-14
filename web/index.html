@@ -14,15 +14,15 @@
             <div class="input limits">
                 <div class="input-title">Размер сетки</div>
                 <div class="input-row">
-                    Количество строк: <span id="rowsCount">3</span>
+                    Количество строк: <span id="rowsCount"></span>
                     <div class="input-range">
-                        2 <input type="range" id="rowsRange" min="2" max="10" value="3"> 10
+                        2 <input type="range" id="rowsRange" min="2" max="10"> 10
                     </div>
                 </div>
                 <div class="input-row">
-                    Количество столбцов: <span id="columnsCount">3</span>
+                    Количество столбцов: <span id="columnsCount"></span>
                     <div class="input-range">
-                        2 <input type="range" id="columnsRange" min="2" max="10" value="3"> 10
+                        2 <input type="range" id="columnsRange" min="2" max="10"> 10
                     </div>
                 </div>
                 <button class="input-button" id="limitsButton">Следующий шаг</button>
@@ -35,7 +35,7 @@
                     Отметьте на сетке начало пути блоком:
                 </div>
                 <div class="cell cell-start"></div>
-                <button class="input-button" id="startButton">Следующий шаг</button>
+                <button class="input-button" id="startButton" disabled>Следующий шаг</button>
             </div>
             <div class="input finish" id="finish" style="display: none;">
                 <div class="input-title">Конец пути</div>
@@ -43,7 +43,7 @@
                     Отметьте на сетке конец пути блоком:
                 </div>
                 <div class="cell cell-finish"></div>
-                <button class="input-button" id="finishButton">Следующий шаг</button>
+                <button class="input-button" id="finishButton" disabled>Следующий шаг</button>
             </div>
             <div class="input walls" id="walls" style="display: none;">
                 <div class="input-title">Стены</div>
@@ -54,25 +54,19 @@
                 <button class="input-button" id="wallsButton">Построить пути</button>
             </div>
         </div>
+        <div id="loader" style="display: none;">
+            <span class="loader"></span>
+        </div>
         <div class="paths" id="paths" style="display: none;">
-            <button class="paths-arrow" id="prevPathButton"><</button>
+            <button class="paths-button" id="prevPathButton"><</button>
             <div>
                 <span class="colored" id="curPath"></span> / <span id="countPaths"></span>
             </div>
-            <button class="paths-arrow" id="nextPathButton">></button>
+            <button class="paths-button" id="nextPathButton">></button>
         </div>
-        <div class="grid" id="grid">
-            <!-- <div class="cell cell-start"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell cell-path"></div>
-            <div class="cell cell-wall"></div>
-            <div class="cell cell-wall"></div>
-            <div class="cell cell-path"></div>
-            <div class="cell cell-path"></div>
-            <div class="cell cell-finish"></div> -->
-        </div>
+        <div class="grid" id="grid"></div>
         <div class="input-align" id="inputAlign"></div>
+        <div class="loader-align" id="loaderAlign" style="display: none;"></div>
         <button class="retry-button" id="retryButton" style="display: none;">повторить</button>
     </div>
 </body>

@@ -10,6 +10,16 @@ let paths = [];
 let curPath;
 
 document.addEventListener("DOMContentLoaded", () => {
+    const rowsRangeHTML = document.getElementById("rowsRange");
+    const rowsCountHTML = document.getElementById("rowsCount");
+    const columnsRangeHTML = document.getElementById("columnsRange");
+    const columnsCountHTML = document.getElementById("columnsCount");
+
+    rowsRangeHTML.value = rowsCount;
+    rowsCountHTML.innerText = rowsCount;
+    columnsRangeHTML.value = columnsCount;
+    columnsCountHTML.innerText = columnsCount;
+
     document.getElementById("rowsRange").oninput = rowsRangeHandler;
     document.getElementById("columnsRange").oninput = columnsRangeHandler;
     document.getElementById("limitsButton").onclick = limitsButtonHandler;
@@ -86,19 +96,34 @@ async function wallsButtonHandler() {
     const wallsHTML = document.getElementById("walls");
     const inputWrapperHTML = document.getElementById("inputWrapper");
     const inputAlignHTML = document.getElementById("inputAlign");
+    const loaderHTML = document.getElementById("loader");
+    const loaderAlignHTML = document.getElementById("loaderAlign");
     const pathsHTML = document.getElementById("paths");
     const retryHTML = document.getElementById("retryButton");
     const curPathHTML = document.getElementById("curPath");
     const countPathHTML = document.getElementById("countPaths");
 
-    await getPaths();
-
-    curPathHTML.innerText = paths.length > 0 ? 1 : 0;
-    countPathHTML.innerText = paths.length;
     wrapperHTML.style.flexDirection = "column";
     wallsHTML.style.display = "none";
     inputWrapperHTML.style.display = "none";
     inputAlignHTML.style.display = "none";
+    loaderHTML.style.display = "block";
+    loaderAlignHTML.style.display = "block";
+
+    if (!await getPaths()) {
+        wrapperHTML.style.flexDirection = "row";
+        wallsHTML.style.display = "flex";
+        inputWrapperHTML.style.display = "flex";
+        inputAlignHTML.style.display = "block";
+        loaderHTML.style.display = "none";
+        loaderAlignHTML.style.display = "none";
+        return;
+    }
+
+    curPathHTML.innerText = paths.length > 0 ? 1 : 0;
+    countPathHTML.innerText = paths.length;
+    loaderHTML.style.display = "none";
+    loaderAlignHTML.style.display = "none";
     pathsHTML.style.display = "flex";
     retryHTML.style.display = "block";
 
@@ -114,6 +139,8 @@ function retryButtonHandler() {
     const inputWrapperHTML = document.getElementById("inputWrapper");
     const inputAlignHTML = document.getElementById("inputAlign");
     const screenHTML = document.getElementById("screen");
+    const startHTML = document.getElementById("startButton");
+    const finishHTML = document.getElementById("finishButton");
 
     wrapperHTML.style.flexDirection = "row";
     pathsHTML.style.display = "none";
@@ -121,6 +148,8 @@ function retryButtonHandler() {
     inputWrapperHTML.style.display = "flex";
     inputAlignHTML.style.display = "block";
     screenHTML.style.display = "flex";
+    startHTML.disabled = true;
+    finishHTML.disabled = true;
 
     start = [];
     finish = [];
@@ -203,6 +232,9 @@ function cellChangeStart(cellHTML) {
         prevStartHTML.className = "cell";
     }
 
+    const startHTML = document.getElementById("startButton");
+
+    startHTML.disabled = false;
     cellHTML.className += " cell-start";
     start = cell;
 }
@@ -219,6 +251,9 @@ function cellChangeFinish(cellHTML) {
         prevFinishHTML.className = "cell";
     }
 
+    const finishHTML = document.getElementById("finishButton");
+    
+    finishHTML.disabled = false;
     cellHTML.className += " cell-finish";
     finish = [cellHTML.x, cellHTML.y];
 }
@@ -276,7 +311,22 @@ function clearPath() {
 }
 
 async function drawPath() {
+    const prevHTML = document.getElementById("prevPathButton");
+    const nextHTML = document.getElementById("nextPathButton");
+    const retryHTML = document.getElementById("retryButton");
+
+    if (curPath == 0) {
+        prevHTML.disabled = false;
+        nextHTML.disabled = false;
+        retryHTML.disabled = false
+        return;
+    }
+    
     const path = paths[curPath - 1];
+
+    prevHTML.disabled = true;
+    nextHTML.disabled = true;
+    retryHTML.disabled = true;
 
     clearPath();
     await sleep(SLEEPMS);
@@ -290,6 +340,10 @@ async function drawPath() {
 
         await sleep(SLEEPMS);
     }
+
+    prevHTML.disabled = false;
+    nextHTML.disabled = false;
+    retryHTML.disabled = false;
 }
 
 async function getPaths() {
@@ -300,14 +354,19 @@ async function getPaths() {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        "limits": [rowsCount - 1, columnsCount - 1], 
+        "limits": [columnsCount - 1, rowsCount - 1], 
         "start": start,
         "finish": finish,
         "walls": walls,
       })
   });
 
-  const json = await resp.json();
+  if (!resp.ok) {
+    return false;
+  }
 
+  const json = await resp.json();
   paths = json.data.paths;
+
+  return true;
 }

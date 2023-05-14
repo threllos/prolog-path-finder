@@ -24,7 +24,7 @@ paths_handler(Request) :-
         limits: Limits, start: Start, finish: Finish, walls: Walls}),
     uuid(Id),
     assert_data(Id, Limits, Start, Finish, Walls),
-    findall(Path, path(Id, Path), Paths),
+    call_with_time_limit(10, findall(Path, path(Id, Path), Paths)),
     retract_data(Id),
     paths_sort(Paths, SortedPaths),
     dict_create(Data, _, [paths-SortedPaths]),
